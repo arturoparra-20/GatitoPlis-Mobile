@@ -1,11 +1,25 @@
-import { StyleSheet } from 'react-native';
+import { Button, StyleSheet } from 'react-native';
 
 import EditScreenInfo from '@/components/EditScreenInfo';
 import { Text, View } from '@/components/Themed';
 import { useAuth } from '@/context/AuthContext';
+import { useRouter } from 'expo-router';
 
 export default function TabOneScreen() {
+
   const {user} = useAuth();
+  const { logout } = useAuth();
+  const router = useRouter();
+  
+  const handleLogout = async () => {
+    try {
+      await logout();
+      // La redirección se manejará automáticamente por el RootLayoutNav
+      router.push('/auth/Login')
+    } catch (error) {
+      console.error("Error al cerrar sesión:", error);
+    }
+  };
   return (
    <> 
     <View style={styles.container}>
@@ -19,6 +33,11 @@ export default function TabOneScreen() {
         <Text>❌ Usuario NO autenticado</Text>
       )}
     </View>
+    <Button 
+      title="Cerrar sesión" 
+      onPress={handleLogout} 
+      color="#ff4444"
+    />
     {/* <View style={styles.container}>
 
       <Text style={styles.title}>Tab One</Text>

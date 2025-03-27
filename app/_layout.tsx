@@ -48,9 +48,9 @@ function InitialLayout() {
 }
 function RootLayoutNav() {
   const colorScheme = useColorScheme();
-  const { user, isLoading, isReady } = useAuth(); // Añade isReady
+  const { user, isLoading } = useAuth();
 
-  if (!isReady || isLoading) {
+  if (isLoading) {
     return (
       <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
         <ActivityIndicator size="large" />
@@ -67,14 +67,7 @@ function RootLayoutNav() {
             <Stack.Screen name="modal" options={{ presentation: 'modal' }} />
           </>
         ) : (
-          <>
-            <Stack.Screen 
-              name="auth/Login" 
-              options={{ 
-                animationTypeForReplace: user ? 'push' : 'pop' 
-              }} 
-            />
-          </>
+          <Stack.Screen name="auth/Login" />
         )}
       </Stack>
     </ThemeProvider>

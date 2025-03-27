@@ -9,6 +9,7 @@ interface User {
     usuario: string;
 }
 
+
 interface AuthContextType {
   user: User | null;
   token: string | null;
