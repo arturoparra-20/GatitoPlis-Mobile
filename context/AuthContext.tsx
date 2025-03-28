@@ -88,7 +88,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         user: data.user,
         token: data.token,
         isLoading: false,
-        isReady: false,
+        isReady: true,
       });
 
       await Promise.all([
@@ -108,7 +108,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       user: null,
       token: null,
       isLoading: false,
-      isReady: false
+      isReady: true,
     });
 
     try {

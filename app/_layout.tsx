@@ -5,7 +5,7 @@ import { Stack } from 'expo-router';
 import * as SplashScreen from 'expo-splash-screen';
 import { useEffect } from 'react';
 import 'react-native-reanimated';
-import { ActivityIndicator, View } from 'react-native'; // ¡Esta es la importación que faltaba!
+import { ActivityIndicator, View } from 'react-native'; 
 
 import { useColorScheme } from '@/components/useColorScheme';
 import { AuthProvider, useAuth } from '../context/AuthContext';
