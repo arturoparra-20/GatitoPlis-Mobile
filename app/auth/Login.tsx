@@ -34,7 +34,7 @@ export default function LoginScreen() {
         setError(null);
         setIsLoading(true);
         try {
-            await login(form.email, form.password, form.rememberMe, () => router.push('/(tabs)'));
+            await login(form.email, form.password, form.rememberMe, () => router.push('/mainLayout'));
         } catch (err) {
             setError("Correo electrónico o contraseña incorrectos");
             setIsLoading(false);
