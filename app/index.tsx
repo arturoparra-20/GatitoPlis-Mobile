@@ -1,8 +1,15 @@
 import React from 'react';
-import MainLayout from './components/MainLayout';
+import { NavigationContainer } from '@react-navigation/native';
+import { AuthProvider } from '@/context/AuthContext';
+import MainLayout from './mainLayout';
 
-const Index = () => {
-  return <MainLayout />;
+const App = () => {
+  return (
+ 
+      <AuthProvider>
+        <MainLayout />
+      </AuthProvider>
+  );
 };
 
-export default Index;
+export default App;

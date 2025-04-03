@@ -3,20 +3,20 @@ import { Slot, useRouter } from 'expo-router';
 import { useEffect } from 'react';
 import Header from './components/Header';
 import TabBar from './components/TabBar';
+import MainTabs from './(tabs)/MainTabs';
 
 export default function MainLayout() {
   const router = useRouter();
 
-  useEffect(() => {
-    // Realizamos la navegación una vez montado
-    router.replace('/features/home'); 
-  }, []);
+  // useEffect(() => {
+  //   // Realizamos la navegación una vez montado
+  //   router.replace('/features/home'); 
+  // }, []);
 
   return (
     <View style={{ flex: 1 }}>
       <Header/>  
-      <Slot />
-      <TabBar/> 
+       <MainTabs/> 
     </View>
   );
 }

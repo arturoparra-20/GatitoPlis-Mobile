@@ -1,6 +1,7 @@
 import { createContext, useState, useEffect, useContext, ReactNode } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { View, ActivityIndicator } from "react-native";
+import { router } from "expo-router";
 
 interface User {
     email: string;
