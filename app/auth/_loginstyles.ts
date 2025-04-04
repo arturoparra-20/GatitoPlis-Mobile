@@ -3,7 +3,6 @@ import { StyleSheet } from 'react-native';
  export const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#f5f5f5',
        
     },
     scrollContainer: {
@@ -13,16 +12,15 @@ import { StyleSheet } from 'react-native';
     },
     formContainer: {
         padding: 20,
-        borderRadius: 10,
+        borderRadius: 30,
         marginHorizontal: 20,
         marginTop: 30,
-        backgroundColor: '#fff',
         shadowColor: '#000',
         shadowOffset: { width: 0, height: 2 },
         shadowOpacity: 0.1,
         shadowRadius: 6,
         elevation: 3,
-    },
+      },
     logo: {
         width: 200,
         height: 150,
@@ -54,6 +52,7 @@ import { StyleSheet } from 'react-native';
         textAlign: 'center',
     },
     input: {
+        backgroundColor: 'white',
         borderWidth: 1,
         borderColor: '#ddd',
         borderRadius: 8,
@@ -66,6 +65,7 @@ import { StyleSheet } from 'react-native';
         marginBottom: 15,
     },
     passwordInput: {
+        backgroundColor: 'white',
         borderWidth: 1,
         borderColor: '#ddd',
         borderRadius: 8,

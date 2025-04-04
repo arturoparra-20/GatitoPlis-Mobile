@@ -10,14 +10,16 @@ import {
     Modal,
     Alert,
     KeyboardAvoidingView,
-    Platform
+    Platform,
+    ImageBackground
 } from 'react-native';
 import { Link, useRouter } from 'expo-router';
 import { FontAwesome } from '@expo/vector-icons';
 import PasswordStrengthMeter from '@/components/PasswordStrengthMeter';
 import Loader from '@/components/Loader';
 import DateTimePicker, { DateTimePickerEvent } from "@react-native-community/datetimepicker";
-import {styles} from "./_registrostyles"
+import { styles } from "./_registrostyles"
+import { LinearGradient } from 'expo-linear-gradient';
 
 export default function RegistroScreen() {
     const [form, setForm] = useState({
@@ -199,7 +201,7 @@ export default function RegistroScreen() {
             // Mostrar único mensaje de error sin cerrar el modal
             Alert.alert(
                 'Error de verificación',
-                 'El token parece ser inválido. Por favor verifica:'
+                'El token parece ser inválido. Por favor verifica:'
                 + '\n1. Que el token sea correcto'
                 + '\n2. Que no haya expirado'
                 + '\n3. Que no lo hayas usado antes',
@@ -214,206 +216,214 @@ export default function RegistroScreen() {
 
 
     return (
-        <KeyboardAvoidingView
-            behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-            style={styles.container}
-        >
-            <ScrollView contentContainerStyle={styles.scrollContainer}>
-                <View style={styles.formContainer}>
-                    <Image
-                        source={require('../assets/logo.png')}
-                        style={styles.logo}
-                    />
-
-                    <Text style={styles.title}>Registro</Text>
-                    <Text style={styles.subtitle}>Únete a nuestra comunidad</Text>
-
-                    {error ? (
-                        <View style={styles.errorContainer}>
-                            <Text style={styles.errorText}>{error}</Text>
-                        </View>
-                    ) : null}
-
-                    <TextInput
-                        value={form.username}
-                        onChangeText={(text) => handleChange('username', text)}
-                        placeholder="Nombre de usuario"
-                        style={styles.input}
-                    />
-
-                    <View style={styles.row}>
-                        <TextInput
-                            value={form.nombres}
-                            onChangeText={(text) => handleChange('nombres', text)}
-                            placeholder="Nombre"
-                            style={[styles.input, styles.halfInput]}
-                        />
-                        <TextInput
-                            value={form.apellidos}
-                            onChangeText={(text) => handleChange('apellidos', text)}
-                            placeholder="Apellido"
-                            style={[styles.input, styles.halfInput]}
-                        />
-                    </View>
-
-                    <TextInput
-                        value={form.email}
-                        onChangeText={(text) => handleChange('email', text)}
-                        placeholder="Correo electrónico"
-                        keyboardType="email-address"
-                        autoCapitalize="none"
-                        style={styles.input}
-                    />
-
-                    <View style={styles.row}>
-                        <View style={styles.passwordContainer}>
-                            <TextInput
-                                value={form.password}
-                                onChangeText={(text) => handleChange('password', text)}
-                                placeholder="Contraseña"
-                                secureTextEntry={!showPassword}
-                                style={[styles.input, styles.passwordInput]}
-                            />
-                            <TouchableOpacity
-                                onPress={() => setShowPassword(!showPassword)}
-                                style={styles.eyeIcon}
-                            >
-                                <FontAwesome
-                                    name={showPassword ? 'eye-slash' : 'eye'}
-                                    size={20}
-                                    color="#666"
-                                />
-                            </TouchableOpacity>
-                        </View>
-
-                        <View style={styles.passwordContainer}>
-                            <TextInput
-                                value={form.confirmPassword}
-                                onChangeText={(text) => handleChange('confirmPassword', text)}
-                                placeholder="Confirmar"
-                                secureTextEntry={!showCPassword}
-                                style={[styles.input, styles.passwordInput]}
-                            />
-                            <TouchableOpacity
-                                onPress={() => setShowCPassword(!showCPassword)}
-                                style={styles.eyeIcon}
-                            >
-                                <FontAwesome
-                                    name={showCPassword ? 'eye-slash' : 'eye'}
-                                    size={20}
-                                    color="#666"
-                                />
-                            </TouchableOpacity>
-                        </View>
-                    </View>
-
-                    <View style={styles.row}>
-                        <View style={styles.passwordMeter}>
-                            <PasswordStrengthMeter password={form.password} />
-                        </View>
-                        <View style={styles.passwordMeter}>
-                            <PasswordStrengthMeter password={form.confirmPassword} />
-                        </View>
-                    </View>
-
-                    <TextInput
-                        value={form.telefono}
-                        onChangeText={(text) => handleChange('telefono', text)}
-                        placeholder="Teléfono"
-                        keyboardType="phone-pad"
-                        style={styles.input}
-                    />
-
-                    <View style={styles.row}>
-                        <TextInput
-                            value={form.pais}
-                            onChangeText={(text) => handleChange('pais', text)}
-                            placeholder="País"
-                            style={[styles.input, styles.halfInput]}
-                        />
-                        <TextInput
-                            value={form.ciudad}
-                            onChangeText={(text) => handleChange('ciudad', text)}
-                            placeholder="Ciudad"
-                            style={[styles.input, styles.halfInput]}
-                        />
-                    </View>
-
-                    <Text style={styles.label}>Fecha de Nacimiento</Text>
-                    <TouchableOpacity
-                        onPress={() => setShowDatePicker(true)}
-                        style={styles.dateInput}
-                    >
-                        <Text style={styles.dateText}>
-                            {form.fechaNacimiento ?
-                                new Date(form.fechaNacimiento).toLocaleDateString('es-ES') :
-                                'Seleccionar fecha'}
-                        </Text>
-                    </TouchableOpacity>
-
-
-                    {showDatePicker && (
-                        <DateTimePicker
-                            value={form.fechaNacimiento ? new Date(form.fechaNacimiento) : new Date()}
-                            mode="date"
-                            display={Platform.OS === 'android' ? 'default' : 'spinner'}
-                            onChange={handleDateChange}
-                            maximumDate={new Date()}
-                            locale="es-ES"
-                            
-                        />
-                    )}
-
-                    <TouchableOpacity
-                        onPress={register}
-                        style={styles.registerButton}
-                        disabled={isLoading}
-                    >
-                        <Text style={styles.registerButtonText}>Registrarse</Text>
-                    </TouchableOpacity>
-
-                    {isLoading && <Loader />}
-
-                    <View style={styles.LoginContainer}>
-                        <Text style={styles.LoginText}>¿Ya tienes una cuenta?</Text>
-                        <Link href="/auth/Login" asChild>
-                            <TouchableOpacity>
-                                <Text style={styles.LoginLink}>Iniciar Sesión</Text>
-                            </TouchableOpacity>
-                        </Link>
-                    </View>
-                </View>
-            </ScrollView>
-
-            <Modal
-                visible={modalOpen}
-                animationType="slide"
-                transparent={true}
+        <ImageBackground source={require("../assets/background1.png")} style={styles.container}>
+            <KeyboardAvoidingView
+                behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+                style={styles.container}
             >
-                <View style={styles.modalContainer}>
-                    <View style={styles.modalContent}>
-                        <Text style={styles.modalTitle}>Verificar cuenta</Text>
-                        <Text style={styles.modalSubtitle}>
-                            Ingresa el token que acabamos de enviar a tu correo
-                        </Text>
+                <ScrollView contentContainerStyle={styles.scrollContainer}>
+                    <LinearGradient
+                        colors={['#e0e0e0', '#f0f0f0', '#ffffff']}
+                        start={{ x: 0.5, y: 1 }}
+                        end={{ x: 0.5, y: 0 }}
+                        style={styles.formContainer}
+                    >
+                        <Image
+                            source={require('../assets/logo.png')}
+                            style={styles.logo}
+                        />
+
+                        <Text style={styles.title}>Registro</Text>
+                        <Text style={styles.subtitle}>Únete a nuestra comunidad</Text>
+
+                        {error ? (
+                            <View style={styles.errorContainer}>
+                                <Text style={styles.errorText}>{error}</Text>
+                            </View>
+                        ) : null}
 
                         <TextInput
-                            value={token}
-                            onChangeText={setToken}
-                            placeholder="Ingrese el token"
-                            style={styles.modalInput}
+                            value={form.username}
+                            onChangeText={(text) => handleChange('username', text)}
+                            placeholder="Nombre de usuario"
+                            style={styles.input}
                         />
+
+                        <View style={styles.row}>
+                            <TextInput
+                                value={form.nombres}
+                                onChangeText={(text) => handleChange('nombres', text)}
+                                placeholder="Nombre"
+                                style={[styles.input, styles.halfInput]}
+                            />
+                            <TextInput
+                                value={form.apellidos}
+                                onChangeText={(text) => handleChange('apellidos', text)}
+                                placeholder="Apellido"
+                                style={[styles.input, styles.halfInput]}
+                            />
+                        </View>
+
+                        <TextInput
+                            value={form.email}
+                            onChangeText={(text) => handleChange('email', text)}
+                            placeholder="Correo electrónico"
+                            keyboardType="email-address"
+                            autoCapitalize="none"
+                            style={styles.input}
+                        />
+
+                        <View style={styles.row}>
+                            <View style={styles.passwordContainer}>
+                                <TextInput
+                                    value={form.password}
+                                    onChangeText={(text) => handleChange('password', text)}
+                                    placeholder="Contraseña"
+                                    secureTextEntry={!showPassword}
+                                    style={[styles.input, styles.passwordInput]}
+                                />
+                                <TouchableOpacity
+                                    onPress={() => setShowPassword(!showPassword)}
+                                    style={styles.eyeIcon}
+                                >
+                                    <FontAwesome
+                                        name={showPassword ? 'eye-slash' : 'eye'}
+                                        size={20}
+                                        color="#666"
+                                    />
+                                </TouchableOpacity>
+                            </View>
+
+                            <View style={styles.passwordContainer}>
+                                <TextInput
+                                    value={form.confirmPassword}
+                                    onChangeText={(text) => handleChange('confirmPassword', text)}
+                                    placeholder="Confirmar"
+                                    secureTextEntry={!showCPassword}
+                                    style={[styles.input, styles.passwordInput]}
+                                />
+                                <TouchableOpacity
+                                    onPress={() => setShowCPassword(!showCPassword)}
+                                    style={styles.eyeIcon}
+                                >
+                                    <FontAwesome
+                                        name={showCPassword ? 'eye-slash' : 'eye'}
+                                        size={20}
+                                        color="#666"
+                                    />
+                                </TouchableOpacity>
+                            </View>
+                        </View>
+
+                        <View style={styles.row}>
+                            <View style={styles.passwordMeter}>
+                                <PasswordStrengthMeter password={form.password} />
+                            </View>
+                            <View style={styles.passwordMeter}>
+                                <PasswordStrengthMeter password={form.confirmPassword} />
+                            </View>
+                        </View>
+
+                        <TextInput
+                            value={form.telefono}
+                            onChangeText={(text) => handleChange('telefono', text)}
+                            placeholder="Teléfono"
+                            keyboardType="phone-pad"
+                            style={styles.input}
+                        />
+
+                        <View style={styles.row}>
+                            <TextInput
+                                value={form.pais}
+                                onChangeText={(text) => handleChange('pais', text)}
+                                placeholder="País"
+                                style={[styles.input, styles.halfInput]}
+                            />
+                            <TextInput
+                                value={form.ciudad}
+                                onChangeText={(text) => handleChange('ciudad', text)}
+                                placeholder="Ciudad"
+                                style={[styles.input, styles.halfInput]}
+                            />
+                        </View>
+
+                        <Text style={styles.label}>Fecha de Nacimiento</Text>
+                        <TouchableOpacity
+                            onPress={() => setShowDatePicker(true)}
+                            style={styles.dateInput}
+                        >
+                            <Text style={styles.dateText}>
+                                {form.fechaNacimiento ?
+                                    new Date(form.fechaNacimiento).toLocaleDateString('es-ES') :
+                                    'Seleccionar fecha'}
+                            </Text>
+                        </TouchableOpacity>
+
+
+                        {showDatePicker && (
+                            <DateTimePicker
+                                value={form.fechaNacimiento ? new Date(form.fechaNacimiento) : new Date()}
+                                mode="date"
+                                display={Platform.OS === 'android' ? 'default' : 'spinner'}
+                                onChange={handleDateChange}
+                                maximumDate={new Date()}
+                                locale="es-ES"
+                                style= {{backgroundColor: 'white'}}
+
+                            />
+                        )}
 
                         <TouchableOpacity
-                            onPress={handleVerify}
-                            style={styles.modalButton}
+                            onPress={register}
+                            style={styles.registerButton}
+                            disabled={isLoading}
                         >
-                            <Text style={styles.modalButtonText}>Verificar</Text>
+                            <Text style={styles.registerButtonText}>Registrarse</Text>
                         </TouchableOpacity>
+
+                        {isLoading && <Loader />}
+
+                        <View style={styles.LoginContainer}>
+                            <Text style={styles.LoginText}>¿Ya tienes una cuenta?</Text>
+                            <Link href="/auth/Login" asChild>
+                                <TouchableOpacity>
+                                    <Text style={styles.LoginLink}>Iniciar Sesión</Text>
+                                </TouchableOpacity>
+                            </Link>
+                        </View>
+                    </LinearGradient>
+                </ScrollView>
+
+                <Modal
+                    visible={modalOpen}
+                    animationType="slide"
+                    transparent={true}
+                >
+                    <View style={styles.modalContainer}>
+                        <View style={styles.modalContent}>
+                            <Text style={styles.modalTitle}>Verificar cuenta</Text>
+                            <Text style={styles.modalSubtitle}>
+                                Ingresa el token que acabamos de enviar a tu correo
+                            </Text>
+
+                            <TextInput
+                                value={token}
+                                onChangeText={setToken}
+                                placeholder="Ingrese el token"
+                                style={styles.modalInput}
+                            />
+
+                            <TouchableOpacity
+                                onPress={handleVerify}
+                                style={styles.modalButton}
+                            >
+                                <Text style={styles.modalButtonText}>Verificar</Text>
+                            </TouchableOpacity>
+                        </View>
                     </View>
-                </View>
-            </Modal>
-        </KeyboardAvoidingView>
+                </Modal>
+            </KeyboardAvoidingView>
+        </ImageBackground>
     );
 }
 

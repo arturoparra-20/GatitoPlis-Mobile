@@ -3,7 +3,7 @@ import { StyleSheet } from "react-native";
 export const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#f5f5f5',
+
     },
     scrollContainer: {
         flexGrow: 1,
@@ -11,9 +11,8 @@ export const styles = StyleSheet.create({
     },
     formContainer: {
         padding: 20,
-        borderRadius: 10,
+        borderRadius: 30,
         marginHorizontal: 20,
-        backgroundColor: '#fff',
         shadowColor: '#000',
         shadowOffset: { width: 0, height: 2 },
         shadowOpacity: 0.1,
@@ -50,6 +49,7 @@ export const styles = StyleSheet.create({
         textAlign: 'center',
     },
     input: {
+        backgroundColor: 'white',
         borderWidth: 1,
         borderColor: '#ddd',
         borderRadius: 8,

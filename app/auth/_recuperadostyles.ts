@@ -3,7 +3,6 @@ import { StyleSheet } from "react-native";
 export const styles = StyleSheet.create({
     container: {
       flex: 1,
-      backgroundColor: '#f5f5f5',
       justifyContent: 'center'
     },
     scrollContainer: {
@@ -52,6 +51,7 @@ export const styles = StyleSheet.create({
       textAlign: 'center',
     },
     input: {
+      backgroundColor: 'white',
       borderWidth: 1,
       borderColor: '#ddd',
       borderRadius: 8,
