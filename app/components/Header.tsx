@@ -32,10 +32,15 @@ const Header = () => {
       {/* Logo y Controles */}
       <View style={styles.headerContent}>
         {/* Logo - Solo visible en móviles */}
+        <TouchableOpacity
+        onPress={() => router.replace("/mainLayout")}
+        >
         <Image 
           source={require('../assets/logo.png')} 
           style={styles.mobileLogo} 
+          
         />
+        </TouchableOpacity>
 
         {/* Controles Derecha */}
         <View style={styles.controlsContainer}>
